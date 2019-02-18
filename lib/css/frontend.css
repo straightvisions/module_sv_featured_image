@@ -1,0 +1,54 @@
+.sv_featured_image {
+	width: 100%;
+	height: 100%;
+	position: relative;
+	text-align: center;
+	min-height: 600px;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-color: #000;
+	background-position: center;
+	color: #fff;
+	padding-top: 255px;
+	padding-bottom: 50px;
+	background-attachment: fixed;
+}
+
+.sv_featured_image::after {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	background-color: inherit;
+	opacity: .3;
+	z-index: 1;
+	transition: all 1s;
+}
+.sv_featured_image .text-wrapper {
+	position: relative;
+	z-index: 2;
+}
+
+.sv_featured_image h2 p {
+	margin: 0;
+	padding: 0;
+}
+.sv_featured_image .text-wrapper {
+	max-width: 1200px;
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 1.5rem;
+	padding-right: 1.5rem;
+}
+@media ( max-width: 800px ) {
+	.sv_featured_image {
+		min-height: 500px;
+		padding-top: 200px;
+		margin-bottom: 0;
+	}
+	.sv_featured_image .text-wrapper {
+		max-width: 100%;
+	}
+}
