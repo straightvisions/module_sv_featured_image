@@ -1,0 +1,1 @@
+# module_sv_featured_image
