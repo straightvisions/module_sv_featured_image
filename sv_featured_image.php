@@ -28,6 +28,8 @@ class sv_featured_image extends init {
 		$this->get_root()->add_section( $this );
 		$this->load_settings();
 
+		add_filter('get_post_metadata', array($this,'get_post_metadata'), 10, 4);
+
 		// Shortcodes
 		add_shortcode( $this->get_module_name(), array( $this, 'shortcode' ) );
 	}
@@ -37,6 +39,28 @@ class sv_featured_image extends init {
 			->set_title( 'Fallback Image' )
 			->set_description( __( 'Uploaded Image will be used when post has not featured image set.', $this->get_module_name() ) )
 			->load_type( 'upload' );
+	}
+	public function get_post_metadata($value, $post_id, $meta_key, $single){
+		if ( '_thumbnail_id' !== $meta_key ) {
+			return $value;
+		}
+
+		if ( is_admin() ) {
+			return $value;
+		}
+
+		remove_filter( 'get_post_metadata', array($this,'get_post_metadata'), 10, 4 );
+
+		$featured_image_id = get_post_thumbnail_id( $post_id );
+
+		add_filter( 'get_post_metadata', array($this,'get_post_metadata'), 10, 4 );
+
+		// The post has a featured image.
+		if ( $featured_image_id ) {
+			return $featured_image_id;
+		}
+
+		return intval($this->s['fallback_image']->run_type()->get_data());
 	}
 	public function shortcode( $settings, $content = '' ) {
 		// Load Styles
