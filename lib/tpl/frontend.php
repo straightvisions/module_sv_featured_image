@@ -1,6 +1,10 @@
-<div class="<?php echo $this->get_module_name(); ?>" style="background-image: url( <?php echo get_the_post_thumbnail_url(false, 'large'); ?> )">
-	<div class="text-wrapper">
-		<h4><?php the_title(); ?></h4>
-		<h2><?php the_excerpt(); ?></h2>
-	</div>
-</div>
+<?php
+if ( ! is_single() && ! is_page() ) {
+	echo '<a href="' . get_the_permalink() . '">';
+}
+
+echo get_the_post_thumbnail( null, 'medium_large', array( 'class' => $this->get_prefix() ) );
+
+if ( ! is_single() && ! is_page() ) {
+	echo '</a>';
+}
