@@ -63,17 +63,18 @@ class sv_featured_image extends init {
 		return intval($this->s['fallback_image']->run_type()->get_data());
 	}
 	public function shortcode( $settings, $content = '' ) {
-		// Load Styles
-		static::$scripts->create( $this )
-			->set_source( $this->get_file_url( 'lib/css/frontend.css' ), $this->get_file_path( 'lib/css/frontend.css' ) );
-
 		$settings								= shortcode_atts(
 			array(
-				'inline'						=> false
+				'inline'						=> true
 			),
 			$settings,
 			$this->get_module_name()
 		);
+
+		// Load Styles
+		static::$scripts->create( $this )
+			->set_source( $this->get_file_url( 'lib/css/frontend.css' ), $this->get_file_path( 'lib/css/frontend.css' ) )
+			->set_inline($settings['inline']);
 
 		ob_start();
 		include( $this->get_file_path( 'lib/tpl/frontend.php' ) );
