@@ -32,6 +32,11 @@ class sv_featured_image extends init {
 
 		// Shortcodes
 		add_shortcode( $this->get_module_name(), array( $this, 'shortcode' ) );
+
+		$this->scripts_queue['frontend']			= static::$scripts->create( $this )
+			->set_ID('frontend')
+			->set_path( 'lib/css/frontend.css' )
+			->set_inline(true);
 	}
 	public function load_settings() {
 		$this->s['fallback_image'] = static::$settings->create( $this )
@@ -72,9 +77,9 @@ class sv_featured_image extends init {
 		);
 
 		// Load Styles
-		static::$scripts->create( $this )
-			->set_path( 'lib/css/frontend.css' )
-			->set_inline($settings['inline']);
+		$this->scripts_queue['frontend']
+			->set_inline($settings['inline'])
+			->set_is_enqueued();
 
 		ob_start();
 		include( $this->get_path( 'lib/tpl/frontend.php' ) );
