@@ -16,12 +16,15 @@ class sv_featured_image extends init {
 	}
 
 	public function init() {
+		// Translates the module
+		load_theme_textdomain( $this->get_module_name(), $this->get_path( 'languages' ) );
+
 		// Module Info
 		$this->set_module_title( 'SV Featured Image' );
 		$this->set_module_desc( __( 'This module shows a featured image via "[sv_featured_image]" shortcode.', $this->get_module_name() ) );
 
 		// Section Info
-		$this->set_section_title( __('Featured Image', $this->get_module_name()) );
+		$this->set_section_title( 'Featured Image' );
 		$this->set_section_desc( __('Settings for Featured Image', $this->get_module_name()) );
 		$this->set_section_type( 'settings' );
 
@@ -41,8 +44,8 @@ class sv_featured_image extends init {
 	public function load_settings() {
 		$this->s['fallback_image'] = static::$settings->create( $this )
 			->set_ID( 'fallback_image' )
-			->set_title( 'Fallback Image' )
-			->set_description( __( 'Uploaded Image will be used when post has not featured image set.', $this->get_module_name() ) )
+			->set_title( __( 'Fallback image', $this->get_module_name() ) )
+			->set_description( __( 'Uploaded image will be used when post has not featured image set.', $this->get_module_name() ) )
 			->load_type( 'upload' );
 	}
 	public function get_post_metadata($value, $post_id, $meta_key, $single){
