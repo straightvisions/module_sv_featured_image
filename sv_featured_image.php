@@ -27,28 +27,39 @@ class sv_featured_image extends init {
 		$this->set_section_title( 'Featured Image' );
 		$this->set_section_desc( __('Settings for Featured Image', $this->get_module_name()) );
 		$this->set_section_type( 'settings' );
-
 		$this->get_root()->add_section( $this );
-		$this->load_settings();
 
+		// Action Hooks
 		add_filter('get_post_metadata', array($this,'get_post_metadata'), 10, 4);
 
 		// Shortcodes
 		add_shortcode( $this->get_module_name(), array( $this, 'shortcode' ) );
 
-		$this->scripts_queue['frontend']			= static::$scripts->create( $this )
-			->set_ID('frontend')
-			->set_path( 'lib/css/frontend.css' )
-			->set_inline(true);
+		$this->load_settings()->register_scripts();
 	}
-	public function load_settings() {
+
+	public function load_settings() :sv_featured_image {
 		$this->s['fallback_image'] = static::$settings->create( $this )
 			->set_ID( 'fallback_image' )
 			->set_title( __( 'Fallback image', $this->get_module_name() ) )
 			->set_description( __( 'Uploaded image will be used when post has not featured image set.', $this->get_module_name() ) )
 			->load_type( 'upload' );
+
+		return $this;
 	}
-	public function get_post_metadata($value, $post_id, $meta_key, $single){
+
+	protected function register_scripts() :sv_featured_image{
+		// Register Styles
+		$this->scripts_queue['default']        = static::$scripts
+			->create( $this )
+			->set_ID( 'default' )
+			->set_path( 'lib/frontend/css/default.css' )
+			->set_inline( true );
+
+		return $this;
+	}
+
+	public function get_post_metadata( $value, $post_id, $meta_key, $single ) {
 		if ( '_thumbnail_id' !== $meta_key ) {
 			return $value;
 		}
@@ -68,9 +79,10 @@ class sv_featured_image extends init {
 			return $featured_image_id;
 		}
 
-		return intval($this->s['fallback_image']->run_type()->get_data());
+		return intval( $this->s['fallback_image']->run_type()->get_data() );
 	}
-	public function shortcode( $settings, $content = '' ) {
+
+	public function shortcode( $settings, $content = '' ) :string {
 		$settings								= shortcode_atts(
 			array(
 				'inline'						=> true
@@ -80,12 +92,10 @@ class sv_featured_image extends init {
 		);
 
 		// Load Styles
-		$this->scripts_queue['frontend']
-			->set_inline($settings['inline'])
-			->set_is_enqueued();
+		$this->scripts_queue['default']->set_inline( $settings['inline'] )->set_is_enqueued();
 
 		ob_start();
-		include( $this->get_path( 'lib/tpl/frontend.php' ) );
+		include( $this->get_path( 'lib/frontend/tpl/default.php' ) );
 		$output									= ob_get_contents();
 		ob_end_clean();
 
