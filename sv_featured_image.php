@@ -85,7 +85,8 @@ class sv_featured_image extends init {
 	public function shortcode( $settings, $content = '' ) :string {
 		$settings								= shortcode_atts(
 			array(
-				'inline'						=> true
+				'inline'						=> true,
+				'size'							=> 'medium_large'
 			),
 			$settings,
 			$this->get_module_name()
