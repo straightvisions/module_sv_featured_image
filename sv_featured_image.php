@@ -11,10 +11,6 @@ namespace sv_100;
  */
 
 class sv_featured_image extends init {
-	public function __construct() {
-
-	}
-
 	public function init() {
 		// Module Info
 		$this->set_module_title( 'SV Featured Image' );
@@ -29,14 +25,11 @@ class sv_featured_image extends init {
 		// Action Hooks
 		add_filter('get_post_metadata', array($this,'get_post_metadata'), 10, 4);
 
-		// Shortcodes
-		add_shortcode( $this->get_module_name(), array( $this, 'shortcode' ) );
-
 		$this->load_settings()->register_scripts();
 	}
 
 	public function load_settings() :sv_featured_image {
-		$this->s['fallback_image'] = static::$settings->create( $this )
+		$this->s['fallback_image'] = $this->get_setting()
 			->set_ID( 'fallback_image' )
 			->set_title( __( 'Fallback image', 'sv_100' ) )
 			->set_description( __( 'Uploaded image will be used when post has not featured image set.', 'sv_100' ) )
@@ -79,7 +72,7 @@ class sv_featured_image extends init {
 		return intval( $this->s['fallback_image']->run_type()->get_data() );
 	}
 
-	public function shortcode( $settings, $content = '' ) :string {
+	public function load( $settings = array() ): string {
 		$settings								= shortcode_atts(
 			array(
 				'inline'						=> true,
