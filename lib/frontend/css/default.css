@@ -1,4 +1,4 @@
-.sv_single .sv_100_sv_featured_image {
+.sv_single .sv100_sv_featured_image {
 	position: absolute;
 	left: 0;
 	border-radius: 5px;
@@ -9,7 +9,7 @@
 	transition: .5s ease;
 }
 
-.sv_single .sv_100_sv_featured_image:hover {
+.sv_single .sv100_sv_featured_image:hover {
 	transform: scale( 1.03 );
 	border-radius: 5px;
 }
