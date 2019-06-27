@@ -14,11 +14,11 @@ class sv_featured_image extends init {
 	public function init() {
 		// Module Info
 		$this->set_module_title( 'SV Featured Image' );
-		$this->set_module_desc( __( 'This module shows a featured image via "[sv_featured_image]" shortcode.', 'straightvisions_100' ) );
+		$this->set_module_desc( __( 'This module shows a featured image via "[sv_featured_image]" shortcode.', 'straightvisions-100' ) );
 
 		// Section Info
 		$this->set_section_title( 'Featured Image' );
-		$this->set_section_desc( __('Settings for Featured Image', 'straightvisions_100') );
+		$this->set_section_desc( __('Settings for Featured Image', 'straightvisions-100') );
 		$this->set_section_type( 'settings' );
 		$this->get_root()->add_section( $this );
 
@@ -31,8 +31,8 @@ class sv_featured_image extends init {
 	public function load_settings() :sv_featured_image {
 		$this->s['fallback_image'] = $this->get_setting()
 			->set_ID( 'fallback_image' )
-			->set_title( __( 'Fallback image', 'straightvisions_100' ) )
-			->set_description( __( 'Uploaded image will be used when post has not featured image set.', 'straightvisions_100' ) )
+			->set_title( __( 'Fallback image', 'straightvisions-100' ) )
+			->set_description( __( 'Uploaded image will be used when post has not featured image set.', 'straightvisions-100' ) )
 			->load_type( 'upload' );
 
 		return $this;
