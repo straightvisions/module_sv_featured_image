@@ -71,9 +71,6 @@ class sv_featured_image extends init {
 			$this->get_module_name()
 		);
 
-		// Load Styles
-		$this->scripts_queue['default']->set_inline( $settings['inline'] )->set_is_enqueued();
-
 		ob_start();
 		include( $this->get_path( 'lib/frontend/tpl/default.php' ) );
 		$output									= ob_get_contents();
