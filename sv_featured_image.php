@@ -23,28 +23,17 @@ class sv_featured_image extends init {
 		$this->get_root()->add_section( $this );
 
 		// Action Hooks
-		add_filter('get_post_metadata', array($this,'get_post_metadata'), 10, 4);
+		add_filter( 'get_post_metadata', array( $this,'get_post_metadata' ), 10, 4 );
 
-		$this->load_settings()->register_scripts();
+		$this->load_settings();
 	}
 
-	public function load_settings() :sv_featured_image {
+	public function load_settings(): sv_featured_image {
 		$this->s['fallback_image'] = $this->get_setting()
 			->set_ID( 'fallback_image' )
 			->set_title( __( 'Fallback image', 'sv100' ) )
 			->set_description( __( 'Uploaded image will be used when post has not featured image set.', 'sv100' ) )
 			->load_type( 'upload' );
-
-		return $this;
-	}
-
-	protected function register_scripts() :sv_featured_image{
-		// Register Styles
-		$this->scripts_queue['default']        = static::$scripts
-			->create( $this )
-			->set_ID( 'default' )
-			->set_path( 'lib/frontend/css/default.css' )
-			->set_inline( true );
 
 		return $this;
 	}
@@ -58,18 +47,18 @@ class sv_featured_image extends init {
 			return $value;
 		}
 
-		remove_filter( 'get_post_metadata', array($this,'get_post_metadata'), 10, 4 );
+		remove_filter( 'get_post_metadata', array( $this,'get_post_metadata' ), 10, 4 );
 
 		$featured_image_id = get_post_thumbnail_id( $post_id );
 
-		add_filter( 'get_post_metadata', array($this,'get_post_metadata'), 10, 4 );
-
+		add_filter( 'get_post_metadata', array( $this,'get_post_metadata' ), 10, 4 );
+		
 		// The post has a featured image.
-		if ( $featured_image_id ) {
+		if ( $featured_image_id || is_array( $this->get_setting( 'fallback_image' )->run_type()->get_data() ) ) {
 			return $featured_image_id;
 		}
 
-		return intval( $this->s['fallback_image']->run_type()->get_data() );
+		return intval( $this->get_setting( 'fallback_image' )->run_type()->get_data() );
 	}
 
 	public function load( $settings = array() ): string {
