@@ -13,28 +13,24 @@
 	
 	class sv_featured_image extends init {
 		public function init() {
-			// Module Info
-			$this->set_module_title( 'SV Featured Image' );
-			$this->set_module_desc( __( 'This module shows a featured image via "[sv_featured_image]" shortcode.', 'sv100' ) );
-	
-			// Section Info
-			$this->set_section_title( 'Featured Image' );
-			$this->set_section_desc( __('Settings for Featured Image', 'sv100') );
-			$this->set_section_type( 'settings' );
-			$this->get_root()->add_section( $this );
+			$this->set_module_title( 'SV Featured Image' )
+				 ->set_module_desc( __( 'This module shows a featured image via "[sv_featured_image]" shortcode.', 'sv100' ) )
+				 ->load_settings()
+				 ->set_section_title( 'Featured Image' )
+				 ->set_section_desc( __('Settings for Featured Image', 'sv100') )
+				 ->set_section_type( 'settings' )
+				 ->get_root()
+				 ->add_section( $this );
 	
 			// Action Hooks
 			add_filter( 'get_post_metadata', array( $this,'get_post_metadata' ), 10, 4 );
-	
-			$this->load_settings();
 		}
 	
-		public function load_settings(): sv_featured_image {
-			$this->s['fallback_image'] = $this->get_setting()
-				->set_ID( 'fallback_image' )
-				->set_title( __( 'Fallback image', 'sv100' ) )
-				->set_description( __( 'Uploaded image will be used when post has not featured image set.', 'sv100' ) )
-				->load_type( 'upload' );
+		protected function load_settings(): sv_featured_image {
+			$this->get_setting( 'fallback_image' )
+				 ->set_title( __( 'Fallback image', 'sv100' ) )
+				 ->set_description( __( 'Uploaded image will be used when post has not featured image set.', 'sv100' ) )
+				 ->load_type( 'upload' );
 	
 			return $this;
 		}
