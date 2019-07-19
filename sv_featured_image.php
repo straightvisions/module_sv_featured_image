@@ -14,10 +14,10 @@
 	class sv_featured_image extends init {
 		public function init() {
 			$this->set_module_title( 'SV Featured Image' )
-				 ->set_module_desc( __( 'This module shows a featured image via "[sv_featured_image]" shortcode.', 'sv100' ) )
+				 ->set_module_desc( __( 'Set a default thumbnail for all posts and pages.', 'sv100' ) )
 				 ->load_settings()
 				 ->set_section_title( 'Featured Image' )
-				 ->set_section_desc( __('Settings for Featured Image', 'sv100') )
+				 ->set_section_desc( __( 'Upload a default thumbnail', 'sv100' ) )
 				 ->set_section_type( 'settings' )
 				 ->get_root()
 				 ->add_section( $this );
@@ -28,8 +28,8 @@
 	
 		protected function load_settings(): sv_featured_image {
 			$this->get_setting( 'fallback_image' )
-				 ->set_title( __( 'Fallback image', 'sv100' ) )
-				 ->set_description( __( 'Uploaded image will be used when post has not featured image set.', 'sv100' ) )
+				 ->set_title( __( 'Default thumbnail', 'sv100' ) )
+				 ->set_description( __( 'Image will be used when posts or pages has no thumbnail set.', 'sv100' ) )
 				 ->load_type( 'upload' );
 	
 			return $this;
