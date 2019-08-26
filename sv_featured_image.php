@@ -13,7 +13,7 @@
 	
 	class sv_featured_image extends init {
 		public function init() {
-			$this->set_module_title(  'SV Featured Image' )
+			$this->set_module_title(  __( 'SV Featured Image', 'sv100' ) )
 				 ->set_module_desc( __( 'Set a default thumbnail for all posts and pages.', 'sv100' ) )
 				 ->load_settings()
 				 ->set_section_title( __('Featured Image', 'sv100') )
