@@ -2,7 +2,7 @@
 	namespace sv100;
 	
 	/**
-	 * @version         4.000
+	 * @version         4.004
 	 * @author			straightvisions GmbH
 	 * @package			sv100
 	 * @copyright		2019 straightvisions GmbH
@@ -51,11 +51,11 @@
 			add_filter( 'get_post_metadata', array( $this,'get_post_metadata' ), 10, 4 );
 			
 			// The post has a featured image.
-			if ( $featured_image_id || is_array( $this->get_setting( 'fallback_image' )->run_type()->get_data() ) ) {
+			if ( $featured_image_id || is_array( $this->get_setting( 'fallback_image' )->get_data() ) ) {
 				return $featured_image_id;
 			}
 	
-			return intval( $this->get_setting( 'fallback_image' )->run_type()->get_data() );
+			return intval( $this->get_setting( 'fallback_image' )->get_data() );
 		}
 	
 		public function load( $settings = array() ): string {
