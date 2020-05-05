@@ -2,7 +2,7 @@
 	namespace sv100;
 	
 	/**
-	 * @version         4.000
+	 * @version         4.004
 	 * @author			straightvisions GmbH
 	 * @package			sv100
 	 * @copyright		2019 straightvisions GmbH
@@ -13,28 +13,25 @@
 	
 	class sv_featured_image extends init {
 		public function init() {
-			// Module Info
-			$this->set_module_title( 'SV Featured Image' );
-			$this->set_module_desc( __( 'This module shows a featured image via "[sv_featured_image]" shortcode.', 'sv100' ) );
-	
-			// Section Info
-			$this->set_section_title( 'Featured Image' );
-			$this->set_section_desc( __('Settings for Featured Image', 'sv100') );
-			$this->set_section_type( 'settings' );
-			$this->get_root()->add_section( $this );
+			$this->set_module_title(  __( 'SV Featured Image', 'sv100' ) )
+				->set_module_desc( __( 'Set a default thumbnail for all posts and pages.', 'sv100' ) )
+				->load_settings()
+				->set_section_title( __('Featured Image', 'sv100') )
+				->set_section_desc( __( 'Upload a default thumbnail', 'sv100' ) )
+				->set_section_type( 'settings' )
+				->set_section_order(31)
+				->get_root()
+				->add_section( $this );
 	
 			// Action Hooks
 			add_filter( 'get_post_metadata', array( $this,'get_post_metadata' ), 10, 4 );
-	
-			$this->load_settings();
 		}
 	
-		public function load_settings(): sv_featured_image {
-			$this->s['fallback_image'] = $this->get_setting()
-				->set_ID( 'fallback_image' )
-				->set_title( __( 'Fallback image', 'sv100' ) )
-				->set_description( __( 'Uploaded image will be used when post has not featured image set.', 'sv100' ) )
-				->load_type( 'upload' );
+		protected function load_settings(): sv_featured_image {
+			$this->get_setting( 'fallback_image' )
+				 ->set_title( __( 'Default thumbnail', 'sv100' ) )
+				 ->set_description( __( 'Image will be used when posts or pages has no thumbnail set.', 'sv100' ) )
+				 ->load_type( 'upload' );
 	
 			return $this;
 		}
@@ -55,11 +52,11 @@
 			add_filter( 'get_post_metadata', array( $this,'get_post_metadata' ), 10, 4 );
 			
 			// The post has a featured image.
-			if ( $featured_image_id || is_array( $this->get_setting( 'fallback_image' )->run_type()->get_data() ) ) {
+			if ( $featured_image_id || is_array( $this->get_setting( 'fallback_image' )->get_data() ) ) {
 				return $featured_image_id;
 			}
 	
-			return intval( $this->get_setting( 'fallback_image' )->run_type()->get_data() );
+			return intval( $this->get_setting( 'fallback_image' )->get_data() );
 		}
 	
 		public function load( $settings = array() ): string {
