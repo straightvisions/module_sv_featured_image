@@ -1,25 +1,14 @@
 <?php
 	namespace sv100;
-	
-	/**
-	 * @version         4.004
-	 * @author			straightvisions GmbH
-	 * @package			sv100
-	 * @copyright		2019 straightvisions GmbH
-	 * @link			https://straightvisions.com
-	 * @since			1.000
-	 * @license			See license.txt or https://straightvisions.com
-	 */
-	
+
 	class sv_featured_image extends init {
 		public function init() {
 			$this->set_module_title(  __( 'SV Featured Image', 'sv100' ) )
-				->set_module_desc( __( 'Set a default thumbnail for all posts and pages.', 'sv100' ) )
-				->load_settings()
-				->set_section_title( __('Featured Image', 'sv100') )
-				->set_section_desc( __( 'Upload a default thumbnail', 'sv100' ) )
+				->set_module_desc( __( 'Set a default thumbnail.', 'sv100' ) )
+				->set_section_title( $this->get_module_title() )
+				->set_section_desc( $this->get_module_desc() )
 				->set_section_type( 'settings' )
-				->set_section_order(31)
+				->set_section_order(5000)
 				->get_root()
 				->add_section( $this );
 	
@@ -70,10 +59,9 @@
 			);
 	
 			ob_start();
-			include( $this->get_path( 'lib/frontend/tpl/default.php' ) );
-			$output									= ob_get_contents();
-			ob_end_clean();
-	
+			include( $this->get_path( 'lib/tpl/frontend/default.php' ) );
+			$output									= ob_get_clean();
+
 			return $output;
 		}
 	}
