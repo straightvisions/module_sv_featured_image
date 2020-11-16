@@ -1,16 +1,13 @@
 <?php
-	namespace sv100;
+	namespace sv100_companion;
 
 	class sv_featured_image extends init {
 		public function init() {
-			$this->set_module_title(  __( 'SV Featured Image', 'sv100' ) )
-				->set_module_desc( __( 'Set a default thumbnail.', 'sv100' ) )
-				->set_section_title( $this->get_module_title() )
-				->set_section_desc( $this->get_module_desc() )
+			$this->set_section_title(  __( 'SV Featured Image', 'sv100_companion' ) )
+				->set_section_desc( __( 'Set a default thumbnail.', 'sv100_companion' ) )
 				->set_section_type( 'settings' )
-				->set_section_order(3600)
-				->get_root()
-				->add_section( $this );
+				->load_settings()
+				->get_root()->add_section($this);
 	
 			// Action Hooks
 			add_filter( 'get_post_metadata', array( $this,'get_post_metadata' ), 10, 4 );
@@ -18,8 +15,8 @@
 	
 		protected function load_settings(): sv_featured_image {
 			$this->get_setting( 'fallback_image' )
-				 ->set_title( __( 'Default thumbnail', 'sv100' ) )
-				 ->set_description( __( 'Image will be used when posts or pages has no thumbnail set.', 'sv100' ) )
+				 ->set_title( __( 'Default thumbnail', 'sv100_companion' ) )
+				 ->set_description( __( 'Image will be used when posts or pages has no thumbnail set.', 'sv100_companion' ) )
 				 ->load_type( 'upload' );
 	
 			return $this;
