@@ -2,17 +2,17 @@
 	if (
 		! is_single()
 		&& ! is_page()
-		&& get_the_post_thumbnail( null, $settings['size'], array( 'class' => $this->get_prefix() ) )
+		&& wp_get_attachment_image( get_post_thumbnail_id(), $settings['size'] )
 	) {
 		echo '<a href="' . get_the_permalink() . '">';
 	}
 
-	echo get_the_post_thumbnail( null, $settings['size'], array( 'class' => $this->get_prefix() ) );
+	echo wp_get_attachment_image( get_post_thumbnail_id(), $settings['size'] );
 
 	if (
 		! is_single()
 		&& ! is_page()
-		&& get_the_post_thumbnail( null, $settings['size'], array( 'class' => $this->get_prefix() ) )
+		&& wp_get_attachment_image( get_post_thumbnail_id(), $settings['size'] )
 	) {
 		echo '</a>';
 	}
