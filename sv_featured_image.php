@@ -49,7 +49,7 @@
 			$settings								= shortcode_atts(
 				array(
 					'inline'						=> true,
-					'size'							=> 'medium_large'
+					'size'							=> 'large'
 				),
 				$settings,
 				$this->get_module_name()
